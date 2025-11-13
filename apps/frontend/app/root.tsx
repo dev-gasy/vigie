@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { Header } from "./components/header";
+import { ErrorBoundary as ComponentErrorBoundary } from "./components/error-boundary";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -47,7 +48,9 @@ export default function App() {
     <div className="min-h-screen bg-background">
       <Header />
       <main className="container mx-auto px-4">
-        <Outlet />
+        <ComponentErrorBoundary>
+          <Outlet />
+        </ComponentErrorBoundary>
       </main>
     </div>
   );

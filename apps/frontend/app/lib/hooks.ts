@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { queryClient, type Issue } from "./query-client";
 
 export function useIssues() {
@@ -54,5 +54,24 @@ export function useIssues() {
     loading,
     error,
     refetch,
+  };
+}
+
+export function useErrorHandler() {
+  const [error, setError] = useState<Error | null>(null);
+
+  const throwError = useCallback((error: Error) => {
+    setError(error);
+    throw error;
+  }, []);
+
+  const clearError = useCallback(() => {
+    setError(null);
+  }, []);
+
+  return {
+    error,
+    throwError,
+    clearError,
   };
 }
