@@ -1,7 +1,13 @@
 import type { User } from "@dgig-vigie/types";
 import { type LoaderFunction } from "react-router";
 import { useLoaderData } from "react-router";
-import { queryClient } from "~/lib/api-client";
+import { queryClient } from "~/lib/query-client";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { ArrowRight } from "lucide-react";
+import { PageHeader } from "~/components/ui/page-header";
+import { Avatar, AvatarFallback } from "~/components/ui/avatar";
+import { ErrorMessage } from "~/components/ui/error-message";
+import { Link } from "~/components/ui/link";
 
 export const loader: LoaderFunction = async () => {
   try {
@@ -25,30 +31,54 @@ export default function UsersPage() {
 
   if (error) {
     return (
-      <div className="p-6">
-        <h1 className="text-2xl font-bold mb-4">Users</h1>
-        <p className="text-red-500">{error}</p>
+      <div className="py-8">
+        <PageHeader title="Users" description="Manage and view user profiles" />
+        <ErrorMessage message={error} />
       </div>
     );
   }
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Users</h1>
-      <div className="grid gap-4">
+    <div className="py-8">
+      <PageHeader title="Users" description="Manage and view user profiles" />
+
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {users.map((user) => (
-          <div key={user.id} className="border p-4 rounded-lg">
-            <h2 className="text-lg font-semibold">{user.name}</h2>
-            <p className="text-gray-600">@{user.username}</p>
-            <p className="text-gray-600">{user.email}</p>
-            <p className="text-gray-600">{user.company.name}</p>
-            <a
-              href={`/users/${user.id}`}
-              className="text-blue-500 hover:underline mt-2 inline-block"
-            >
-              View details
-            </a>
-          </div>
+          <Card
+            key={user.id}
+            className="group hover:shadow-lg transition-shadow"
+          >
+            <CardHeader className="pb-3">
+              <div className="flex items-center space-x-3">
+                <Avatar>
+                  <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <div>
+                  <CardTitle className="text-lg">{user.name}</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    @{user.username}
+                  </p>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">{user.email}</p>
+                <p className="text-sm text-muted-foreground">
+                  {user.company.name}
+                </p>
+              </div>
+              <div className="pt-3 border-t border-border">
+                <Link
+                  to={`/users/${user.id}`}
+                  className="inline-flex items-center text-sm font-medium"
+                >
+                  View details
+                  <ArrowRight className="ml-1 h-3 w-3" />
+                </Link>
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>

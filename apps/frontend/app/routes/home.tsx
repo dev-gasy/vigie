@@ -1,9 +1,11 @@
-import { Welcome } from "~/welcome/welcome";
+import { Welcome, loader } from "~/welcome/welcome";
+
+export { loader };
 
 export function meta() {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Dashboard - Vigie" },
+    { name: "description", content: "Dashboard overview of your application" },
   ];
 }
 

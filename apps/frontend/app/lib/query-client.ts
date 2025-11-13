@@ -1,4 +1,4 @@
-import type { User, Post } from "@dgig-vigie/types";
+import type { User, Post, Issue, DashboardData } from "@dgig-vigie/types";
 
 const API_BASE_URL = "http://localhost:3000";
 
@@ -19,6 +19,14 @@ class QueryClient {
     return this.request<User>(`/users/${id}`);
   }
 
+  async getAllIssues(): Promise<Issue[]> {
+    return this.request<Issue[]>("/issues");
+  }
+
+  async getIssueById(id: string): Promise<Issue> {
+    return this.request<Issue>(`/issues/${id}`);
+  }
+
   async getAllPosts(): Promise<Post[]> {
     return this.request<Post[]>("/posts");
   }
@@ -26,6 +34,11 @@ class QueryClient {
   async getPostById(id: number): Promise<Post> {
     return this.request<Post>(`/posts/${id}`);
   }
+
+  async getDashboardData(): Promise<DashboardData> {
+    return this.request<DashboardData>("/dashboard");
+  }
 }
 
 export const queryClient = new QueryClient();
+export type { User, Post, Issue, DashboardData };

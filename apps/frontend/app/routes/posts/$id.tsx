@@ -1,6 +1,10 @@
 import { type LoaderFunction } from "react-router";
 import { useLoaderData } from "react-router";
-import { queryClient, type Post } from "~/lib/api-client";
+import { queryClient, type Post } from "~/lib/query-client";
+import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
+import { Badge } from "~/components/ui/badge";
+import { BackButton } from "~/components/ui/back-button";
+import { getUserBadgeColor, getArticleBadgeColor } from "~/lib/badge-colors";
 
 export const loader: LoaderFunction = async ({ params }) => {
   const id = parseInt(params.id as string);
@@ -29,21 +33,35 @@ export default function PostDetailsPage() {
   const { post } = useLoaderData<{ post: Post }>();
 
   return (
-    <div className="p-6">
-      <div className="mb-4">
-        <a href="/posts" className="text-blue-500 hover:underline">
-          ← Back to Posts
-        </a>
-      </div>
+    <div className="py-8">
+      <BackButton to="/posts" label="Back to Posts" />
 
-      <article className="border p-6 rounded-lg">
-        <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-        <div className="mb-4">
-          <p className="text-sm text-gray-500">User ID: {post.userId}</p>
-        </div>
-        <div className="prose max-w-none">
-          <p className="text-gray-700 leading-relaxed">{post.body}</p>
-        </div>
+      <article className="max-w-4xl">
+        <Card>
+          <CardHeader className="pb-6">
+            <div className="space-y-4">
+              <CardTitle className="text-4xl font-bold leading-tight tracking-tight">
+                {post.title}
+              </CardTitle>
+              <div className="flex items-center space-x-2">
+                <div className="inline-flex items-center space-x-2">
+                  <Badge variant="secondary" className={getUserBadgeColor()}>
+                    Author: User {post.userId}
+                  </Badge>
+                  <span className="h-1 w-1 bg-muted-foreground/30 rounded-full"></span>
+                  <Badge variant="outline" className={getArticleBadgeColor()}>
+                    Article
+                  </Badge>
+                </div>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="prose prose-gray max-w-none dark:prose-invert">
+              <p className="text-foreground leading-7 text-base">{post.body}</p>
+            </div>
+          </CardContent>
+        </Card>
       </article>
     </div>
   );
