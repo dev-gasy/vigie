@@ -2,6 +2,7 @@ import "dotenv/config";
 
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { env } from "hono/adapter";
 import type { Env } from "./env.js";
 import { posts } from "./modules/posts/routes.js";
@@ -10,6 +11,13 @@ import { issues } from "./modules/issues/routes.js";
 import { dashboard } from "./modules/dashboard/routes.js";
 
 const app = new Hono();
+
+// Enable CORS for frontend requests
+app.use("*", cors({
+  origin: ["http://localhost:5173", "http://localhost:3001"],
+  allowMethods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.get("/", (c) => {
   const { API_KEY } = env<Env>(c);
