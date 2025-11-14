@@ -4,27 +4,12 @@ import { Card, CardContent } from '~/components/ui/card'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Spinner } from '~/components/ui/spinner'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '~/components/ui/select'
-import { queryClient, type Issue } from '~/lib/query-client'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from '~/components/ui/select'
+import { type Issue, queryClient } from '~/lib/query-client'
 import { useLoaderData, useNavigation } from 'react-router'
-import { getStatusColor, getPriorityColor } from '~/lib/badge-colors'
-import {
-  AlertTriangle,
-  Search,
-  Filter,
-  Bug,
-  FileText,
-  Target,
-  Zap,
-  WifiOff,
-} from 'lucide-react'
-import { useState, useMemo } from 'react'
+import { getPriorityColor } from '~/lib/badge-colors'
+import { AlertTriangle, Bug, FileText, Filter, Search, Target, WifiOff, Zap, } from 'lucide-react'
+import { useMemo, useState } from 'react'
 
 export async function loader() {
   try {
@@ -237,10 +222,6 @@ export default function Issues() {
                   </div>
 
                   <div className="flex items-center gap-3 shrink-0">
-                    <div
-                      className={`w-2 h-2 rounded-full ${getStatusColor(issue.status)}`}
-                      title={issue.status}
-                    ></div>
                     <Badge
                       variant="outline"
                       className={`text-xs font-normal ${getPriorityColor(issue.priority)}`}

@@ -4,15 +4,15 @@ import { Badge } from '~/components/ui/badge'
 import { Avatar, AvatarFallback } from '~/components/ui/avatar'
 import { Button } from '~/components/ui/button'
 import { Spinner } from '~/components/ui/spinner'
-import { queryClient, type Issue } from '~/lib/query-client'
+import { type Issue, queryClient } from '~/lib/query-client'
 import { useLoaderData, useNavigation } from 'react-router'
 import type { Route } from './+types/$id'
 import {
-  getStatusColor,
-  getPriorityColor,
   getLabelColor,
+  getPriorityColor,
+  getStatusColor,
 } from '~/lib/badge-colors'
-import { Bug, FileText, Zap, WifiOff, Target } from 'lucide-react'
+import { Bug, FileText, Target, WifiOff, Zap } from 'lucide-react'
 
 export async function loader({ params }: Route.LoaderArgs) {
   try {

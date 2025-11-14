@@ -1,6 +1,5 @@
 import type { User } from '@dgig-vigie/types'
-import { type LoaderFunction } from 'react-router'
-import { useLoaderData } from 'react-router'
+import { type LoaderFunction, useLoaderData } from 'react-router'
 import { queryClient } from '~/lib/query-client'
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
 import { ArrowRight } from 'lucide-react'
@@ -32,7 +31,7 @@ export function meta() {
 }
 
 export default function UsersPage() {
-  const { users, error } = useLoaderData<{ users: User[]; error?: string }>()
+  const { users, error } = useLoaderData<UserData>()
 
   if (error) {
     return (

@@ -6,4 +6,6 @@ export default [
   route('issues/:id', 'routes/issues/$id.tsx'),
   route('posts', 'routes/posts/index.tsx'),
   route('posts/:id', 'routes/posts/$id.tsx'),
+  route('users', 'routes/users/index.tsx'),
+  route('users/:id', 'routes/users/$id.tsx'),
 ] satisfies RouteConfig
