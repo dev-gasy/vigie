@@ -1,5 +1,5 @@
-import { usersApi, issuesApi, postsApi, dashboardApi } from '~/api'
-import type { User, Post, Issue, DashboardData } from '@dgig-vigie/types'
+import { usersApi, issuesApi, postsApi } from '~/api'
+import type { User, Post, Issue } from '@dgig-vigie/types'
 
 class QueryClient {
   async getAllUsers(): Promise<User[]> {
@@ -25,11 +25,7 @@ class QueryClient {
   async getPostById(id: number): Promise<Post> {
     return postsApi.getById(id)
   }
-
-  async getDashboardData(): Promise<DashboardData> {
-    return dashboardApi.getData()
-  }
 }
 
 export const queryClient = new QueryClient()
-export type { User, Post, Issue, DashboardData }
+export type { User, Post, Issue }

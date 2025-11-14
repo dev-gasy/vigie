@@ -7,7 +7,6 @@ import type { Env } from './env.js'
 import { posts } from './modules/posts/routes.js'
 import { users } from './modules/users/routes.js'
 import { issues } from './modules/issues/routes.js'
-import { dashboard } from './modules/dashboard/routes.js'
 
 const app = new Hono()
 
@@ -16,7 +15,6 @@ app.get('/', c => {
   return c.text('Hello Hono!: ' + API_KEY)
 })
 
-app.route('/dashboard', dashboard)
 app.route('/posts', posts)
 app.route('/users', users)
 app.route('/issues', issues)

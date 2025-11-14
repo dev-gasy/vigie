@@ -1,11 +1,9 @@
-import { Welcome, loader } from '~/welcome/welcome'
-
-export { loader }
+import { Welcome } from '~/welcome/welcome'
 
 export function meta() {
   return [
-    { title: 'Dashboard - Vigie' },
-    { name: 'description', content: 'Dashboard overview of your application' },
+    { title: 'Home - Vigie' },
+    { name: 'description', content: 'Welcome to Vigie application' },
   ]
 }
 

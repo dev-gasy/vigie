@@ -7,148 +7,57 @@ import {
   CardHeader,
   CardTitle,
 } from '~/components/ui/card'
-import { BarChart3, Bug, FileText, TrendingUp } from 'lucide-react'
-import { type DashboardData, queryClient } from '~/lib/query-client'
-import { useLoaderData } from 'react-router'
-
-export async function loader() {
-  return await queryClient.getDashboardData()
-}
-
-function formatTimeAgo(timestamp: string): string {
-  const now = new Date()
-  const time = new Date(timestamp)
-  const diffMs = now.getTime() - time.getTime()
-  const diffMins = Math.floor(diffMs / (1000 * 60))
-  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
-
-  if (diffMins < 60) {
-    return `${diffMins}m ago`
-  } else {
-    return `${diffHours}h ago`
-  }
-}
-
-function getActivityColor(type: string): string {
-  switch (type) {
-    case 'issue':
-      return 'bg-blue-500'
-    case 'post':
-      return 'bg-green-500'
-    case 'system':
-      return 'bg-orange-500'
-    default:
-      return 'bg-gray-500'
-  }
-}
+import { Bug, FileText, Users } from 'lucide-react'
 
 export function Welcome() {
-  const { metrics, recentActivity } = useLoaderData() as DashboardData
-
   return (
     <div className="pt-6 space-y-6">
       <PageHeader
-        title="Dashboard"
-        description="Overview of your application"
+        title="Welcome to Vigie"
+        description="Manage your content and track issues"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Issues</CardTitle>
-            <Bug className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{metrics.totalIssues}</div>
-            <p className="text-xs text-muted-foreground">
-              {metrics.issueGrowth}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
-            <FileText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{metrics.totalPosts}</div>
-            <p className="text-xs text-muted-foreground">
-              {metrics.postGrowth}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Active Sessions
-            </CardTitle>
-            <BarChart3 className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{metrics.activeSessions}</div>
-            <p className="text-xs text-muted-foreground">
-              {metrics.sessionGrowth}
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Growth Rate</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{metrics.growthRate}%</div>
-            <p className="text-xs text-muted-foreground">
-              {metrics.rateGrowth}
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-            <CardDescription>Navigate to different sections</CardDescription>
+            <CardTitle>Issues</CardTitle>
+            <CardDescription>Track and manage issues</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent>
             <Link
               to="/issues"
               variant="button"
               className="w-full justify-start"
             >
               <Bug className="mr-2 h-4 w-4" />
-              Manage Issues
-            </Link>
-            <Link to="/posts" variant="button" className="w-full justify-start">
-              <FileText className="mr-2 h-4 w-4" />
-              Manage Posts
+              View Issues
             </Link>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>Latest updates in your system</CardDescription>
+            <CardTitle>Posts</CardTitle>
+            <CardDescription>Browse and manage posts</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-3">
-              {recentActivity.map(activity => (
-                <div key={activity.id} className="flex items-center space-x-2">
-                  <div
-                    className={`w-2 h-2 rounded-full ${getActivityColor(activity.type)}`}
-                  ></div>
-                  <span className="text-sm">{activity.message}</span>
-                  <span className="text-xs text-muted-foreground ml-auto">
-                    {formatTimeAgo(activity.timestamp)}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <Link to="/posts" variant="button" className="w-full justify-start">
+              <FileText className="mr-2 h-4 w-4" />
+              View Posts
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Users</CardTitle>
+            <CardDescription>Manage user accounts</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link to="/users" variant="button" className="w-full justify-start">
+              <Users className="mr-2 h-4 w-4" />
+              View Users
+            </Link>
           </CardContent>
         </Card>
       </div>
