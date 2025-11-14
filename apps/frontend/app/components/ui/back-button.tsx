@@ -1,12 +1,12 @@
-import { Link } from "react-router";
-import { ArrowLeft } from "lucide-react";
+import { Link } from 'react-router'
+import { ArrowLeft } from 'lucide-react'
 
 interface BackButtonProps {
-  to: string;
-  label?: string;
+  to: string
+  label?: string
 }
 
-export function BackButton({ to, label = "Back" }: BackButtonProps) {
+export function BackButton({ to, label = 'Back' }: BackButtonProps) {
   return (
     <div className="mb-8">
       <Link
@@ -17,5 +17,5 @@ export function BackButton({ to, label = "Back" }: BackButtonProps) {
         {label}
       </Link>
     </div>
-  );
+  )
 }

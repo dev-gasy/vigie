@@ -1,1 +1,1 @@
-export type { User, CreateUserRequest } from "@dgig-vigie/types";
+export type { User, CreateUserRequest } from '@dgig-vigie/types'

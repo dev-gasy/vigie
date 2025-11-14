@@ -1,19 +1,19 @@
-import { Link } from "~/components/ui/link";
-import { PageHeader } from "~/components/ui/page-header";
-import { Card, CardContent } from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
-import { Button } from "~/components/ui/button";
-import { Spinner } from "~/components/ui/spinner";
+import { Link } from '~/components/ui/link'
+import { PageHeader } from '~/components/ui/page-header'
+import { Card, CardContent } from '~/components/ui/card'
+import { Badge } from '~/components/ui/badge'
+import { Button } from '~/components/ui/button'
+import { Spinner } from '~/components/ui/spinner'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "~/components/ui/select";
-import { queryClient, type Issue } from "~/lib/query-client";
-import { useLoaderData, useNavigation } from "react-router";
-import { getStatusColor, getPriorityColor } from "~/lib/badge-colors";
+} from '~/components/ui/select'
+import { queryClient, type Issue } from '~/lib/query-client'
+import { useLoaderData, useNavigation } from 'react-router'
+import { getStatusColor, getPriorityColor } from '~/lib/badge-colors'
 import {
   AlertTriangle,
   Search,
@@ -23,83 +23,83 @@ import {
   Target,
   Zap,
   WifiOff,
-} from "lucide-react";
-import { useState, useMemo } from "react";
+} from 'lucide-react'
+import { useState, useMemo } from 'react'
 
 export async function loader() {
   try {
-    const issues = await queryClient.getAllIssues();
-    return { issues, error: null };
+    const issues = await queryClient.getAllIssues()
+    return { issues, error: null }
   } catch (error) {
     return {
       issues: [],
-      error: error instanceof Error ? error.message : "Failed to load issues",
-    };
+      error: error instanceof Error ? error.message : 'Failed to load issues',
+    }
   }
 }
 
 export function meta({
   data,
 }: {
-  data: { issues: Issue[]; error: string | null };
+  data: { issues: Issue[]; error: string | null }
 }) {
-  const issueCount = data?.issues?.length || 0;
+  const issueCount = data?.issues?.length || 0
   return [
-    { title: "Issues - Vigie" },
+    { title: 'Issues - Vigie' },
     {
-      name: "description",
+      name: 'description',
       content: `View and manage ${issueCount} JIRA issues`,
     },
-  ];
+  ]
 }
 
 function getTypeIcon(type: string) {
   switch (type) {
-    case "Bug":
-      return <Bug className="h-4 w-4 text-red-500" />;
-    case "Story":
-      return <FileText className="h-4 w-4 text-blue-500" />;
-    case "Task":
-      return <Target className="h-4 w-4 text-green-500" />;
-    case "Epic":
-      return <Zap className="h-4 w-4 text-purple-500" />;
+    case 'Bug':
+      return <Bug className="h-4 w-4 text-red-500" />
+    case 'Story':
+      return <FileText className="h-4 w-4 text-blue-500" />
+    case 'Task':
+      return <Target className="h-4 w-4 text-green-500" />
+    case 'Epic':
+      return <Zap className="h-4 w-4 text-purple-500" />
     default:
-      return <FileText className="h-4 w-4 text-gray-500" />;
+      return <FileText className="h-4 w-4 text-gray-500" />
   }
 }
 
 export default function Issues() {
-  const data = useLoaderData() as { issues: Issue[]; error: string | null };
-  const navigation = useNavigation();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string>("All");
-  const [priorityFilter, setPriorityFilter] = useState<string>("All");
-  const [typeFilter, setTypeFilter] = useState<string>("All");
+  const data = useLoaderData() as { issues: Issue[]; error: string | null }
+  const navigation = useNavigation()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [statusFilter, setStatusFilter] = useState<string>('All')
+  const [priorityFilter, setPriorityFilter] = useState<string>('All')
+  const [typeFilter, setTypeFilter] = useState<string>('All')
 
-  const isLoading = navigation.state === "loading";
-  const { issues, error } = data;
+  const isLoading = navigation.state === 'loading'
+  const { issues, error } = data
 
   const filteredIssues = useMemo(() => {
-    return issues.filter((issue) => {
+    return issues.filter(issue => {
       const matchesSearch =
         issue.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
         issue.key.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (issue.description?.toLowerCase().includes(searchQuery.toLowerCase()) ??
-          false);
+          false)
 
       const matchesStatus =
-        statusFilter === "All" || issue.status === statusFilter;
+        statusFilter === 'All' || issue.status === statusFilter
       const matchesPriority =
-        priorityFilter === "All" || issue.priority === priorityFilter;
-      const matchesType = typeFilter === "All" || issue.type === typeFilter;
+        priorityFilter === 'All' || issue.priority === priorityFilter
+      const matchesType = typeFilter === 'All' || issue.type === typeFilter
 
-      return matchesSearch && matchesStatus && matchesPriority && matchesType;
-    });
-  }, [issues, searchQuery, statusFilter, priorityFilter, typeFilter]);
+      return matchesSearch && matchesStatus && matchesPriority && matchesType
+    })
+  }, [issues, searchQuery, statusFilter, priorityFilter, typeFilter])
 
-  const uniqueStatuses = [...new Set(issues.map((issue) => issue.status))];
-  const uniquePriorities = [...new Set(issues.map((issue) => issue.priority))];
-  const uniqueTypes = [...new Set(issues.map((issue) => issue.type))];
+  const uniqueStatuses = [...new Set(issues.map(issue => issue.status))]
+  const uniquePriorities = [...new Set(issues.map(issue => issue.priority))]
+  const uniqueTypes = [...new Set(issues.map(issue => issue.type))]
 
   if (error) {
     return (
@@ -114,7 +114,7 @@ export default function Issues() {
           </CardContent>
         </Card>
       </div>
-    );
+    )
   }
 
   return (
@@ -140,7 +140,7 @@ export default function Issues() {
             type="text"
             placeholder="Search issues..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={e => setSearchQuery(e.target.value)}
             className="w-full pl-10 pr-4 py-2.5 border border-input bg-background rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
           />
         </div>
@@ -158,7 +158,7 @@ export default function Issues() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="All">All Statuses</SelectItem>
-                {uniqueStatuses.map((status) => (
+                {uniqueStatuses.map(status => (
                   <SelectItem key={status} value={status}>
                     {status}
                   </SelectItem>
@@ -172,7 +172,7 @@ export default function Issues() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="All">All Priorities</SelectItem>
-                {uniquePriorities.map((priority) => (
+                {uniquePriorities.map(priority => (
                   <SelectItem key={priority} value={priority}>
                     {priority}
                   </SelectItem>
@@ -186,7 +186,7 @@ export default function Issues() {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="All">All Types</SelectItem>
-                {uniqueTypes.map((type) => (
+                {uniqueTypes.map(type => (
                   <SelectItem key={type} value={type}>
                     {type}
                   </SelectItem>
@@ -206,17 +206,17 @@ export default function Issues() {
               <h3 className="text-lg font-semibold mb-2">No issues found</h3>
               <p className="text-muted-foreground">
                 {searchQuery ||
-                statusFilter !== "All" ||
-                priorityFilter !== "All" ||
-                typeFilter !== "All"
-                  ? "Try adjusting your search or filters"
-                  : "No issues available"}
+                statusFilter !== 'All' ||
+                priorityFilter !== 'All' ||
+                typeFilter !== 'All'
+                  ? 'Try adjusting your search or filters'
+                  : 'No issues available'}
               </p>
             </CardContent>
           </Card>
         ) : (
           <div className="space-y-2">
-            {filteredIssues.map((issue) => (
+            {filteredIssues.map(issue => (
               <Link
                 key={issue.id}
                 to={`/issues/${issue.id}`}
@@ -255,5 +255,5 @@ export default function Issues() {
         )}
       </div>
     </div>
-  );
+  )
 }

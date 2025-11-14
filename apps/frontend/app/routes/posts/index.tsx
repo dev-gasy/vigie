@@ -1,34 +1,33 @@
-import type { Post } from "@dgig-vigie/types";
-import { type LoaderFunction } from "react-router";
-import { useLoaderData } from "react-router";
-import { queryClient } from "~/lib/query-client";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { ArrowRight } from "lucide-react";
-import { PageHeader } from "~/components/ui/page-header";
-import { Badge } from "~/components/ui/badge";
-import { ErrorMessage } from "~/components/ui/error-message";
-import { Link } from "~/components/ui/link";
-import { getUserBadgeColor } from "~/lib/badge-colors";
+import type { Post } from '@dgig-vigie/types'
+import { type LoaderFunction, useLoaderData } from 'react-router'
+import { queryClient } from '~/lib/query-client'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { ArrowRight } from 'lucide-react'
+import { PageHeader } from '~/components/ui/page-header'
+import { Badge } from '~/components/ui/badge'
+import { ErrorMessage } from '~/components/ui/error-message'
+import { Link } from '~/components/ui/link'
+import { getUserBadgeColor } from '~/lib/badge-colors'
 
 export const loader: LoaderFunction = async () => {
   try {
-    const posts = await queryClient.getAllPosts();
-    return { posts };
+    const posts = await queryClient.getAllPosts()
+    return { posts }
   } catch (error) {
-    console.error("Failed to fetch posts:", error);
-    return { posts: [], error: "Failed to fetch posts" };
+    console.error('Failed to fetch posts:', error)
+    return { posts: [], error: 'Failed to fetch posts' }
   }
-};
+}
 
 export function meta() {
   return [
-    { title: "Posts" },
-    { name: "description", content: "List of all posts" },
-  ];
+    { title: 'Posts' },
+    { name: 'description', content: 'List of all posts' },
+  ]
 }
 
 export default function PostsPage() {
-  const { posts, error } = useLoaderData<{ posts: Post[]; error?: string }>();
+  const { posts, error } = useLoaderData<{ posts: Post[]; error?: string }>()
 
   if (error) {
     return (
@@ -39,7 +38,7 @@ export default function PostsPage() {
         />
         <ErrorMessage message={error} />
       </div>
-    );
+    )
   }
 
   return (
@@ -50,7 +49,7 @@ export default function PostsPage() {
       />
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => (
+        {posts.map(post => (
           <Card
             key={post.id}
             className="group hover:shadow-lg transition-shadow"
@@ -81,5 +80,5 @@ export default function PostsPage() {
         ))}
       </div>
     </div>
-  );
+  )
 }

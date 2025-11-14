@@ -1,36 +1,36 @@
-import { type LoaderFunction } from "react-router";
-import { useLoaderData } from "react-router";
-import { queryClient, type Post } from "~/lib/query-client";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
-import { BackButton } from "~/components/ui/back-button";
-import { getUserBadgeColor, getArticleBadgeColor } from "~/lib/badge-colors";
+import { type LoaderFunction } from 'react-router'
+import { useLoaderData } from 'react-router'
+import { queryClient, type Post } from '~/lib/query-client'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { Badge } from '~/components/ui/badge'
+import { BackButton } from '~/components/ui/back-button'
+import { getUserBadgeColor, getArticleBadgeColor } from '~/lib/badge-colors'
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const id = parseInt(params.id as string);
+  const id = parseInt(params.id as string)
 
   if (isNaN(id)) {
-    throw new Response("Invalid post ID", { status: 400 });
+    throw new Response('Invalid post ID', { status: 400 })
   }
 
   try {
-    const post = await queryClient.getPostById(id);
-    return { post };
+    const post = await queryClient.getPostById(id)
+    return { post }
   } catch (error) {
-    console.error(`Failed to fetch post ${id}:`, error);
-    throw new Response("Post not found", { status: 404 });
+    console.error(`Failed to fetch post ${id}:`, error)
+    throw new Response('Post not found', { status: 404 })
   }
-};
+}
 
 export function meta({ data }: { data: { post: Post } }) {
   return [
-    { title: `${data.post?.title || "Post"} - Post Details` },
-    { name: "description", content: data.post?.body?.substring(0, 150) },
-  ];
+    { title: `${data.post?.title || 'Post'} - Post Details` },
+    { name: 'description', content: data.post?.body?.substring(0, 150) },
+  ]
 }
 
 export default function PostDetailsPage() {
-  const { post } = useLoaderData<{ post: Post }>();
+  const { post } = useLoaderData<{ post: Post }>()
 
   return (
     <div className="py-8">
@@ -64,5 +64,5 @@ export default function PostDetailsPage() {
         </Card>
       </article>
     </div>
-  );
+  )
 }

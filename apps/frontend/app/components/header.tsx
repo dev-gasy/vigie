@@ -1,9 +1,8 @@
-import { Link, useLocation } from "react-router";
-import { cn } from "~/lib/utils";
-import { Eye } from "lucide-react";
+import { Link, useLocation } from 'react-router'
+import { cn } from '~/lib/utils'
 
 export function Header() {
-  const location = useLocation();
+  const location = useLocation()
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
@@ -19,10 +18,10 @@ export function Header() {
           <Link
             to="/issues"
             className={cn(
-              "px-3 py-2 text-sm font-medium rounded-md transition-all duration-200",
-              location.pathname.startsWith("/issues")
-                ? "text-foreground bg-muted"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted",
+              'px-3 py-2 text-sm font-medium rounded-md transition-all duration-200',
+              location.pathname.startsWith('/issues')
+                ? 'text-foreground bg-muted'
+                : 'text-muted-foreground hover:text-foreground hover:bg-muted'
             )}
           >
             Issues
@@ -30,10 +29,10 @@ export function Header() {
           <Link
             to="/posts"
             className={cn(
-              "px-3 py-2 text-sm font-medium rounded-md transition-all duration-200",
-              location.pathname.startsWith("/posts")
-                ? "text-foreground bg-muted"
-                : "text-muted-foreground hover:text-foreground hover:bg-muted",
+              'px-3 py-2 text-sm font-medium rounded-md transition-all duration-200',
+              location.pathname.startsWith('/posts')
+                ? 'text-foreground bg-muted'
+                : 'text-muted-foreground hover:text-foreground hover:bg-muted'
             )}
           >
             Posts
@@ -41,5 +40,5 @@ export function Header() {
         </nav>
       </div>
     </header>
-  );
+  )
 }

@@ -4,7 +4,9 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "format": "prettier --write \"**/*.{ts,js,md,json}\"",
+    "format:check": "prettier --check \"**/*.{ts,js,md,json}\""
   },
   "dependencies": {
     "@dgig-vigie/types": "workspace:*",
@@ -15,8 +17,11 @@
     "zod": "^4.1.12"
   },
   "devDependencies": {
+    "@dgig-vigie/prettier-config": "workspace:*",
     "@types/node": "^20.11.17",
+    "prettier": "^3.6.2",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3"
-  }
+  },
+  "prettier": "@dgig-vigie/prettier-config"
 }

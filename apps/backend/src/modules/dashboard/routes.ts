@@ -1,15 +1,15 @@
-import { Hono } from "hono";
-import { DashboardService } from "./service.js";
+import { Hono } from 'hono'
+import { DashboardService } from './service.js'
 
-const dashboard = new Hono();
+const dashboard = new Hono()
 
-dashboard.get("/", async (c) => {
+dashboard.get('/', async c => {
   try {
-    const data = await DashboardService.getDashboardData();
-    return c.json(data);
+    const data = await DashboardService.getDashboardData()
+    return c.json(data)
   } catch (error) {
-    return c.json({ error: "Failed to fetch dashboard data" }, 500);
+    return c.json({ error: 'Failed to fetch dashboard data' }, 500)
   }
-});
+})
 
-export { dashboard };
+export { dashboard }

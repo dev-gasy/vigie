@@ -1,69 +1,69 @@
-import { BackButton } from "~/components/ui/back-button";
-import { Card, CardContent } from "~/components/ui/card";
-import { Badge } from "~/components/ui/badge";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
-import { Button } from "~/components/ui/button";
-import { Spinner } from "~/components/ui/spinner";
-import { queryClient, type Issue } from "~/lib/query-client";
-import { useLoaderData, useNavigation } from "react-router";
-import type { Route } from "./+types/$id";
+import { BackButton } from '~/components/ui/back-button'
+import { Card, CardContent } from '~/components/ui/card'
+import { Badge } from '~/components/ui/badge'
+import { Avatar, AvatarFallback } from '~/components/ui/avatar'
+import { Button } from '~/components/ui/button'
+import { Spinner } from '~/components/ui/spinner'
+import { queryClient, type Issue } from '~/lib/query-client'
+import { useLoaderData, useNavigation } from 'react-router'
+import type { Route } from './+types/$id'
 import {
   getStatusColor,
   getPriorityColor,
   getLabelColor,
-} from "~/lib/badge-colors";
-import { Bug, FileText, Zap, WifiOff, Target } from "lucide-react";
+} from '~/lib/badge-colors'
+import { Bug, FileText, Zap, WifiOff, Target } from 'lucide-react'
 
 export async function loader({ params }: Route.LoaderArgs) {
   try {
-    const issue = await queryClient.getIssueById(params.id);
-    return { issue, error: null };
+    const issue = await queryClient.getIssueById(params.id)
+    return { issue, error: null }
   } catch (error) {
     return {
       issue: null,
-      error: error instanceof Error ? error.message : "Failed to load issue",
-    };
+      error: error instanceof Error ? error.message : 'Failed to load issue',
+    }
   }
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  const result = loaderData as { issue: Issue | null; error: string | null };
+  const result = loaderData as { issue: Issue | null; error: string | null }
   if (!result.issue) {
     return [
-      { title: "Issue Not Found - Vigie" },
+      { title: 'Issue Not Found - Vigie' },
       {
-        name: "description",
-        content: "The requested issue could not be found",
+        name: 'description',
+        content: 'The requested issue could not be found',
       },
-    ];
+    ]
   }
   return [
     { title: `${result.issue.key} - Issues - Vigie` },
-    { name: "description", content: result.issue.summary },
-  ];
+    { name: 'description', content: result.issue.summary },
+  ]
 }
 
 function getTypeIcon(type: string) {
   switch (type) {
-    case "Bug":
-      return <Bug className="h-5 w-5 text-red-500" />;
-    case "Story":
-      return <FileText className="h-5 w-5 text-blue-500" />;
-    case "Task":
-      return <Target className="h-5 w-5 text-green-500" />;
-    case "Epic":
-      return <Zap className="h-5 w-5 text-purple-500" />;
+    case 'Bug':
+      return <Bug className="h-5 w-5 text-red-500" />
+    case 'Story':
+      return <FileText className="h-5 w-5 text-blue-500" />
+    case 'Task':
+      return <Target className="h-5 w-5 text-green-500" />
+    case 'Epic':
+      return <Zap className="h-5 w-5 text-purple-500" />
     default:
-      return <FileText className="h-5 w-5 text-gray-500" />;
+      return <FileText className="h-5 w-5 text-gray-500" />
   }
 }
 
 export default function IssueDetail() {
-  const data = useLoaderData() as { issue: Issue | null; error: string | null };
-  const navigation = useNavigation();
+  const data = useLoaderData() as { issue: Issue | null; error: string | null }
+  const navigation = useNavigation()
 
-  const isLoading = navigation.state === "loading";
-  const { issue, error } = data;
+  const isLoading = navigation.state === 'loading'
+  const { issue, error } = data
 
   if (error || !issue) {
     return (
@@ -81,7 +81,7 @@ export default function IssueDetail() {
           <CardContent>
             <WifiOff className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-semibold mb-2">
-              {error ? "Loading Error" : "Issue Not Found"}
+              {error ? 'Loading Error' : 'Issue Not Found'}
             </h3>
             <p className="text-muted-foreground mb-4">
               {error ||
@@ -100,7 +100,7 @@ export default function IssueDetail() {
           </CardContent>
         </Card>
       </div>
-    );
+    )
   }
 
   return (
@@ -207,10 +207,10 @@ export default function IssueDetail() {
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Created</span>
                 <span>
-                  {new Date(issue.created).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
+                  {new Date(issue.created).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
                   })}
                 </span>
               </div>
@@ -218,10 +218,10 @@ export default function IssueDetail() {
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Updated</span>
                 <span>
-                  {new Date(issue.updated).toLocaleDateString("en-US", {
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
+                  {new Date(issue.updated).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
                   })}
                 </span>
               </div>
@@ -230,10 +230,10 @@ export default function IssueDetail() {
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">Due Date</span>
                   <span>
-                    {new Date(issue.dueDate).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
+                    {new Date(issue.dueDate).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
                     })}
                   </span>
                 </div>
@@ -279,5 +279,5 @@ export default function IssueDetail() {
         </div>
       </div>
     </div>
-  );
+  )
 }

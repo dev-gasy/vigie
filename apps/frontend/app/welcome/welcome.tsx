@@ -1,50 +1,49 @@
-import { Link } from "~/components/ui/link";
-import { PageHeader } from "~/components/ui/page-header";
+import { Link } from '~/components/ui/link'
+import { PageHeader } from '~/components/ui/page-header'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/components/ui/card";
-import { Bug, FileText, BarChart3, TrendingUp } from "lucide-react";
-import { queryClient, type DashboardData } from "~/lib/query-client";
-import { useLoaderData } from "react-router";
+} from '~/components/ui/card'
+import { BarChart3, Bug, FileText, TrendingUp } from 'lucide-react'
+import { type DashboardData, queryClient } from '~/lib/query-client'
+import { useLoaderData } from 'react-router'
 
 export async function loader() {
-  const dashboardData = await queryClient.getDashboardData();
-  return dashboardData;
+  return await queryClient.getDashboardData()
 }
 
 function formatTimeAgo(timestamp: string): string {
-  const now = new Date();
-  const time = new Date(timestamp);
-  const diffMs = now.getTime() - time.getTime();
-  const diffMins = Math.floor(diffMs / (1000 * 60));
-  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const now = new Date()
+  const time = new Date(timestamp)
+  const diffMs = now.getTime() - time.getTime()
+  const diffMins = Math.floor(diffMs / (1000 * 60))
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
 
   if (diffMins < 60) {
-    return `${diffMins}m ago`;
+    return `${diffMins}m ago`
   } else {
-    return `${diffHours}h ago`;
+    return `${diffHours}h ago`
   }
 }
 
 function getActivityColor(type: string): string {
   switch (type) {
-    case "issue":
-      return "bg-blue-500";
-    case "post":
-      return "bg-green-500";
-    case "system":
-      return "bg-orange-500";
+    case 'issue':
+      return 'bg-blue-500'
+    case 'post':
+      return 'bg-green-500'
+    case 'system':
+      return 'bg-orange-500'
     default:
-      return "bg-gray-500";
+      return 'bg-gray-500'
   }
 }
 
 export function Welcome() {
-  const { metrics, recentActivity } = useLoaderData() as DashboardData;
+  const { metrics, recentActivity } = useLoaderData() as DashboardData
 
   return (
     <div className="pt-6 space-y-6">
@@ -138,7 +137,7 @@ export function Welcome() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {recentActivity.map((activity) => (
+              {recentActivity.map(activity => (
                 <div key={activity.id} className="flex items-center space-x-2">
                   <div
                     className={`w-2 h-2 rounded-full ${getActivityColor(activity.type)}`}
@@ -154,5 +153,5 @@ export function Welcome() {
         </Card>
       </div>
     </div>
-  );
+  )
 }

@@ -1,37 +1,36 @@
-import type { User } from "@dgig-vigie/types";
-import { type LoaderFunction } from "react-router";
-import { useLoaderData } from "react-router";
-import { queryClient } from "~/lib/query-client";
-import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
-import { Mail, MapPin, Building2 } from "lucide-react";
-import { Avatar, AvatarFallback } from "~/components/ui/avatar";
-import { BackButton } from "~/components/ui/back-button";
+import type { User } from '@dgig-vigie/types'
+import { type LoaderFunction, useLoaderData } from 'react-router'
+import { queryClient } from '~/lib/query-client'
+import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card'
+import { Building2, Mail, MapPin } from 'lucide-react'
+import { Avatar, AvatarFallback } from '~/components/ui/avatar'
+import { BackButton } from '~/components/ui/back-button'
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const id = parseInt(params.id as string);
+  const id = parseInt(params.id as string)
 
   if (isNaN(id)) {
-    throw new Response("Invalid user ID", { status: 400 });
+    throw new Response('Invalid user ID', { status: 400 })
   }
 
   try {
-    const user = await queryClient.getUserById(id);
-    return { user };
+    const user = await queryClient.getUserById(id)
+    return { user }
   } catch (error) {
-    console.error(`Failed to fetch user ${id}:`, error);
-    throw new Response("User not found", { status: 404 });
+    console.error(`Failed to fetch user ${id}:`, error)
+    throw new Response('User not found', { status: 404 })
   }
-};
+}
 
 export function meta({ data }: { data: { user: User } }) {
   return [
-    { title: `${data.user?.name || "User"} - User Details` },
-    { name: "description", content: `Details for ${data.user?.name}` },
-  ];
+    { title: `${data.user?.name || 'User'} - User Details` },
+    { name: 'description', content: `Details for ${data.user?.name}` },
+  ]
 }
 
 export default function UserDetailsPage() {
-  const { user } = useLoaderData<{ user: User }>();
+  const { user } = useLoaderData<{ user: User }>()
 
   return (
     <div className="py-8">
@@ -147,7 +146,7 @@ export default function UserDetailsPage() {
                     Catch Phrase
                   </label>
                   <p className="text-foreground italic">
-                    "{user.company.catchPhrase}"
+                    {user.company.catchPhrase}
                   </p>
                 </div>
                 <div>
@@ -162,5 +161,5 @@ export default function UserDetailsPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
