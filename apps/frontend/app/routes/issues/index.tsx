@@ -4,11 +4,26 @@ import { Card, CardContent } from '~/components/ui/card'
 import { Badge } from '~/components/ui/badge'
 import { Button } from '~/components/ui/button'
 import { Spinner } from '~/components/ui/spinner'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from '~/components/ui/select'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '~/components/ui/select'
 import { type Issue, queryClient } from '~/lib/query-client'
 import { useLoaderData, useNavigation } from 'react-router'
 import { getPriorityColor } from '~/lib/badge-colors'
-import { AlertTriangle, Bug, FileText, Filter, Search, Target, WifiOff, Zap, } from 'lucide-react'
+import {
+  AlertTriangle,
+  Bug,
+  FileText,
+  Filter,
+  Search,
+  Target,
+  WifiOff,
+  Zap,
+} from 'lucide-react'
 import { useMemo, useState } from 'react'
 
 export async function loader() {
